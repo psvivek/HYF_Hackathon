@@ -108,7 +108,7 @@ def infer_dental_model(file_path, model,  plot = False):
   
     
     img_width, img_height =  200, 200
-    file_path = ".."+file_path
+    file_path = "./polls"+file_path
     page_count, img_array_lst = DocumentLoader.load(file_path, max_num_pages = 1, output_type=OutputType.NUMPY)
 #     Plotting raw images and cropped sign boxes
     if plot:
@@ -134,16 +134,16 @@ def infer_dental_model(file_path, model,  plot = False):
     elif np.argmax(model.predict(img_arr), axis = -1)[0] == 2:
         result_dict['disease_class'] = 'periodontitis'
         result_dict['confidence'] = np.max(model.predict(img_arr))         
-          
+    print(result_dict)
     return result_dict
     
 skin_model = load_model(weights_path = "./polls/static/skin_model_weights.h5", img_width = 200, img_height = 200)
 dental_model = load_model(weights_path = "./polls/static/dental_model_weights.h5", img_width = 200, img_height = 200)
 
-# img_file_path = "teeth.jpeg"
+# img_file_path = "image.jpeg"
 
 def dentalPreds(img_file_path):
-    print(img_file_path)
+    # print(img_file_path)
     return infer_dental_model(file_path = img_file_path, model = dental_model,  plot = False)
 
 def skinPreds(img_file_path):

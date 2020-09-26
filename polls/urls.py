@@ -16,8 +16,8 @@ urlpatterns = [
     # path('dental', TemplateView.as_view(template_name='dental.html'), name='dental'),
     path('login', TemplateView.as_view(template_name='login.html'), name='login'),
     path('signup', TemplateView.as_view(template_name='signup.html'), name='signup'),
-    path('skin', TemplateView.as_view(template_name='skin.html'), name='skin'),
-    path('preds', TemplateView.as_view(template_name='preds.html'), name='preds'),
+    # path('skin', TemplateView.as_view(template_name='skin.html'), name='skin'),
+    path('doclisting', TemplateView.as_view(template_name='doclisting.html'), name='doclisting'),
     # ex: /polls/5
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     # ex: /polls/5/results
@@ -26,6 +26,7 @@ urlpatterns = [
     path('<int:question_id>/vote/', views.vote, name='vote'),
 
     url('dental', views.simple_upload, name='simple_upload'),
+    url('skin', views.simple_upload_skin, name='simple_upload'),
     # url('preds', views.simple_upload, name='simple_upload'),
 
 ]

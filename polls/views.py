@@ -36,6 +36,20 @@ def simple_upload(request):
         })
     return render(request, 'dental.html ')
 
+def simple_upload_skin(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        pred_string = skinPreds(uploaded_file_url)
+        return render(request, 'skin.html', {
+            'uploaded_file_url': uploaded_file_url,
+            'uploaded_file': myfile.name,
+            'predictions': pred_string
+        })
+    return render(request, 'skin.html ')
+
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
