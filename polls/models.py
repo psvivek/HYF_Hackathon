@@ -74,7 +74,7 @@ def infer_skin_model(file_path, model,  plot = False):
   
     
     img_width, img_height =  200, 200
-    
+    file_path = "./polls"+file_path
     page_count, img_array_lst = DocumentLoader.load(file_path, max_num_pages = 1, output_type=OutputType.NUMPY)
 #     Plotting raw images and cropped sign boxes
     if plot:

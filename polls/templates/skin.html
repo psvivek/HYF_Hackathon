@@ -13,17 +13,21 @@
     <link rel="stylesheet" href="../static/assets/fonts/ionicons.min.css">
     <link rel="stylesheet" href="../static/assets/fonts/fontawesome5-overrides.min.css">
     <link rel="stylesheet" href="../static/assets/css/magi-smartphone-2.css">
-    <link rel="stylesheet" href="../static/assets/css/Animated-Pretty-Product-List-v12.css">
-    <link rel="stylesheet" href="../static/assets/css/Custom-File-Upload.css">
     <link rel="stylesheet" href="../static/assets/css/Highlight-Phone.css">
     <link rel="stylesheet" href="../static/assets/css/Login-Form-Clean.css">
     <link rel="stylesheet" href="../static/assets/css/magi-smartphone-1.css">
     <link rel="stylesheet" href="../static/assets/css/magi-smartphone.css">
-    <link rel="stylesheet" href="../static/assets/css/Pretty-Registration-Form.css">
     <link rel="stylesheet" href="../static/assets/css/untitled.css">
+    <link rel="stylesheet" href="../static/assets/css/Animated-Pretty-Product-List-v12.css">
+    <link rel="stylesheet" href="../static/assets/css/Custom-File-Upload.css">
+    <link rel="stylesheet" href="../static/assets/css/Pretty-Registration-Form.css">
 </head>
 
 <body style="background: rgb(241,247,252);">
+    {% load static %}
+
+    {% block content %}
+      {% if not uploaded_file_url %}
     <section style="margin: 22px;margin-bottom: -364px;margin-right: 21px;margin-top: 65px;">
         <h1 style="text-align: center;color: #2c3e50;">SKIN DIAGNOSIS</h1>
     </section>
@@ -38,21 +42,19 @@
                 <div class="col-md-6 col-lg-4 col-xl-4 offset-xl-0"><i class="fas fa-camera" style="width: 200px;height: 16px;margin: 0px;margin-top: 123px;margin-bottom: 8px;font-size: 43px;color: #00c6b2;"></i>
                     <h1 style="color: #00c6b2;margin-left: -1px;">Use Camera</h1>
                     <p style="color: #57595b;">Not sure what to click?<br>Take a picture of a patch of your skin.&nbsp;</p>
-                    {% load static %}
-
-                    {% block content %}
-                      {% if not uploaded_file_url %}
-                      <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="file" name="myfile">
-                        <button type="submit">Upload</button>
-                      </form>
-                      {% endif %}
-                      {% if uploaded_file_url %}
-                        <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
-                      {% endif %}
                     
-                    {% endblock %}
+                    <form method="post" enctype="multipart/form-data">
+                        <div style="width: 200px;">
+                        <input type="file" id="user_group_logo" class="custom-file-input" accept="image/*" name="myfile">
+                            <div class="text-center"><label id="user_group_label" for="user_group_logo" style="border-color: #18bc9c;color: #18bc9c;"><i class="fas fa-upload"></i>&nbsp;Choose an image...</label></div>
+                            <div class="text-center mt-2">
+                                <button class="btn btn-primary" type="submit">Upload</button>
+                            </div>
+                        {% csrf_token %}
+                        <!-- <input type="file" name="myfile"> -->
+                        <!-- <button type="submit">Upload</button> -->
+                      </form>
+                      
                 </div>
             </div>
         </div>
@@ -105,6 +107,103 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="../static/assets/js/freelancer.js"></script>
     <script src="../static/assets/js/Custom-File-Upload.js"></script>
+
+    {% endif %}
+    {% if uploaded_file_url %}
+    <h1 style="margin-top: 146px;text-align: center;color: #00c6b2;">REPORT ANALYSIS&nbsp;</h1>
+    <div class="row register-form">
+        <div class="col-md-8 offset-md-2">
+            <form class="custom-form">
+                <h1>DENTAL ANALYSIS</h1>
+                <div class="form-row form-group">
+                    <div class="col-sm-4 label-column"><label class="col-form-label" for="name-input-field">Disease Name&nbsp;</label></div>
+                    <div class="col-sm-6 input-column" style="border: 1px solid rgb(219,219,219) ;">
+                        <p style="padding: 2%;">{{ predictions.disease_class }}</p>
+                    </div>
+                </div>
+                <div class="form-row form-group">
+                    <div class="col-sm-4 label-column"><label class="col-form-label" for="email-input-field">Confidence Percentage</label></div>
+                    <div class="col-sm-6 input-column" style="border: 1px solid #dbdbdb ;">
+                        <p style="padding: 2%;">{{ predictions.confidence }}</p>
+                    </div>
+                </div>
+                <div class="form-row form-group">
+                    <div class="col-sm-4 label-column"><label class="col-form-label" for="pawssword-input-field">Disease Description</label></div>
+                    <div class="col-sm-6 input-column">
+                        <p style="margin-top: 20px;height: 100%;border: 1px solid rgb(219,219,219);margin-left: -4px;">
+                            {% if predictions.disease_class ==  'psoriasis_skin' %}
+                            No one knows the exact cause of psoriasis, but experts believe that it’s a combination of things. Something wrong with the immune system causes inflammation, triggering new skin cells to form too quickly. Normally, skin cells are replaced every 10 to 30 days. With psoriasis, new cells grow every 3 to 4 days. The buildup of old cells being replaced by new ones creates those silver scales.
+                            <br><br>
+                            Psoriasis tends to run in families, but it may be skip generations. For instance, a grandfather and his grandson may be affected, but not the child's mother.
+
+                            {% endif %}
+
+                            {% if predictions.disease_class ==  'acne_skin'%}
+                            Acne typically appears on your face, forehead, chest, upper back and shoulders because these areas of skin have the most oil (sebaceous) glands. Hair follicles are connected to oil glands.
+                            <br><br>
+                            The follicle wall may bulge and produce a whitehead. Or the plug may be open to the surface and darken, causing a blackhead. A blackhead may look like dirt stuck in pores. But actually the pore is congested with bacteria and oil, which turns brown when it's exposed to the air.
+                            <br><br>
+                            Pimples are raised red spots with a white center that develop when blocked hair follicles become inflamed or infected with bacteria. Blockages and inflammation deep inside hair follicles produce cystlike lumps beneath the surface of your skin. Other pores in your skin, which are the openings of the sweat glands, aren't usually involved in acne.
+                            {% endif %}
+
+                            {% if predictions.disease_class ==  'normal_skin'%}
+                                none
+                            {% endif %}
+                        </p>
+                    </div>
+                </div><button class="btn btn-light border rounded submit-button" type="button" style="background: #00c6b2;">More Info</button><a class="btn btn-light border rounded submit-button" role="button" href="doclisting" style="background: #00c6b2;">Consult Doctor</a></form>
+        </div>
+    </div>
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-secondary text-uppercase" id="mainNav">
+        <div class="container"><button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+            <div
+                class="collapse navbar-collapse" id="navbarResponsive"><img src="../static/assets/img/Potential%20Logo%20.png" style="width: 177px;">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#">HOME</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="dental">DENTAL</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="skin">SKIN</a></li>
+                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="margin: 9px;">ACCOUNT&nbsp;</a>
+                        <div class="dropdown-menu"><a class="dropdown-item" href="signup">Sign UP</a><a class="dropdown-item" href="login">LOG IN</a></div>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contact</a></li>
+                </ul>
+        </div>
+        </div>
+    </nav>
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-4">CONTACT US</h4>
+                    <p>Phone No.&nbsp; &nbsp; &nbsp;+61 406 123 789<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; +61 407 321 987<br>Email:&nbsp; &nbsp;admin@earlysense.com</p>
+                </div>
+                <div class="col-md-4 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase">Around the Web</h4>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a class="btn btn-outline-light btn-social text-center rounded-circle" role="button" href="#"><i class="fa fa-facebook fa-fw"></i></a></li>
+                        <li class="list-inline-item"><a class="btn btn-outline-light btn-social text-center rounded-circle" role="button" href="#"><i class="fa fa-google-plus fa-fw"></i></a></li>
+                        <li class="list-inline-item"><a class="btn btn-outline-light btn-social text-center rounded-circle" role="button" href="#"><i class="fa fa-twitter fa-fw"></i></a></li>
+                        <li class="list-inline-item"></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-uppercase mb-4">FEEDBACK</h4>
+                    <p class="lead mb-0"><span>The sole purpose of the application is to diagnose your health problems in the early stages. Feedback will help us achieve the above objective. Feel free to contact us.&nbsp;</span></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="copyright py-4 text-center text-white">
+        <div class="container"><small>Copyright ©&nbsp;Early Care 2020</small></div>
+    </div>
+    <script src="../static/assets/js/jquery.min.js"></script>
+    <script src="../static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="../static/assets/js/freelancer.js"></script>
+    <script src="../static/assets/js/Custom-File-Upload.js"></script>
+    {% endif %}
+  
+  {% endblock %}
 </body>
 
 </html>
