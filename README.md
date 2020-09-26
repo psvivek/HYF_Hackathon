@@ -1,4 +1,7 @@
 # HYF_Hackathon
+
+## Video URL: https://www.youtube.com/watch?v=ntIK_c0HEU0
+
 ## Early care app
 
 “Early care” helps people for having early diagnosis of skin and dental problems which can be diagnosed via visual inspection using a web app. We are not replacing diagnosis of any Doctor or Dentist but we are assisting them to have early diagnosis. Once “Early Care” diagnose any disease, it will refer it to nearest doctors. It also helps Health Insurance by reducing the claims cost since it our product addresses the health problem way before it has become worse. 
