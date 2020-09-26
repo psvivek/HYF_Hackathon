@@ -28,10 +28,13 @@ def simple_upload(request):
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
-        return render(request, 'dental', {
-            'uploaded_file_url': uploaded_file_url
+        pred_string = dentalPreds(uploaded_file_url)
+        return render(request, 'dental.html', {
+            'uploaded_file_url': uploaded_file_url,
+            'uploaded_file': myfile.name,
+            'predictions': pred_string
         })
-    return render(request, 'polls/dental.html')
+    return render(request, 'dental.html ')
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'

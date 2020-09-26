@@ -108,7 +108,7 @@ def infer_dental_model(file_path, model,  plot = False):
   
     
     img_width, img_height =  200, 200
-    
+    file_path = ".."+file_path
     page_count, img_array_lst = DocumentLoader.load(file_path, max_num_pages = 1, output_type=OutputType.NUMPY)
 #     Plotting raw images and cropped sign boxes
     if plot:
@@ -140,13 +140,19 @@ def infer_dental_model(file_path, model,  plot = False):
 skin_model = load_model(weights_path = "./polls/static/skin_model_weights.h5", img_width = 200, img_height = 200)
 dental_model = load_model(weights_path = "./polls/static/dental_model_weights.h5", img_width = 200, img_height = 200)
 
-img_file_path = "teeth.jpeg"
+# img_file_path = "teeth.jpeg"
 
 def dentalPreds(img_file_path):
+    print(img_file_path)
     return infer_dental_model(file_path = img_file_path, model = dental_model,  plot = False)
 
 def skinPreds(img_file_path):
     return infer_skin_model(file_path = img_file_path, model = skin_model,  plot = False)   
+
+class Document(models.Model):
+    description = models.CharField(max_length=255, blank=True)
+    document = models.FileField(upload_to='documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
